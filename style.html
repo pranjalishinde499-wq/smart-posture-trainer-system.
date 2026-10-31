@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Posture Trainer Pro++</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <!-- ml5.js -->
+  <script src="https://unpkg.com/ml5@0.6.0/dist/ml5.min.js"></script>
+</head>
+
+<body>
+  <header class="app-header">
+    <h1 class="app-title">Smart Posture Trainer <span class="brand-dot">•</span></h1>
+    <p class="app-sub">Real-time posture feedback · Voice & Sound · Session export</p>
+  </header>
+
+  <main class="app-grid">
+    <!-- left: camera + canvas -->
+    <section class="video-panel">
+      <div id="videoCard" class="card">
+        <div class="video-top">
+          <div class="camera-title">Camera</div>
+          <div id="statusBadge" class="badge neutral">Initializing...</div>
+        </div>
+
+        <!-- canvasWrapper has neon border effect via CSS -->
+        <div id="canvasWrapper" class="canvas-wrapper">
+          <!-- p5 canvas will attach here -->
+          <div id="overlayMessage" class="overlay-msg"></div>
+          <div id="emojiContainer" class="emoji-container" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- right: dashboard -->
+    <aside class="dashboard-panel">
+      <div class="card stats-card">
+        <div class="stat-row">
+          <div>
+            <div class="stat-label">Current</div>
+            <div id="currentPosture" class="stat-value">—</div>
+            <div class="stat-sub" id="poseMode">Mode: —</div>
+          </div>
+          <div class="stat-right">
+            <div class="stat-label">Session</div>
+            <div id="sessionTimer" class="stat-value">00:00</div>
+            <div class="stat-sub">Elapsed</div>
+          </div>
+        </div>
+
+        <div class="meter">
+          <div class="meter-left">
+            <div class="meter-label">Accuracy</div>
+            <div id="accuracyText" class="meter-number">0%</div>
+            <div id="accuracyBar" class="accuracy-bar">
+              <div id="accuracyFill" class="accuracy-fill"></div>
+            </div>
+          </div>
+
+          <div class="meter-right">
+            <div class="small-card">
+              <div class="small-label">Correct</div>
+              <div id="correctCount" class="small-number">0</div>
+            </div>
+            <div class="small-card">
+              <div class="small-label">Wrong</div>
+              <div id="wrongCount" class="small-number">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="duration-row">
+          <div class="duration-label">Current Correct Duration</div>
+          <div id="durationText" class="duration-value">0.0 s</div>
+        </div>
+
+        <!-- Chart -->
+        <canvas id="chartCanvas" width="340" height="100" aria-label="Accuracy trend chart"></canvas>
+      </div>
+
+      <div class="card controls-card">
+        <div class="controls">
+          <button id="startBtn" class="btn primary">▶ Start & Voice</button>
+          <button id="pauseBtn" class="btn">⏸ Pause</button>
+          <button id="resetBtn" class="btn">🔁 Reset</button>
+          <button id="exportBtn" class="btn">⬇ Export CSV</button>
+        </div>
+
+        <div class="helper">
+          <label class="toggle">
+            <input id="voiceToggle" type="checkbox" checked />
+            <span>Voice</span>
+          </label>
+
+          <label class="toggle">
+            <input id="soundToggle" type="checkbox" checked />
+            <span>Sound</span>
+          </label>
+
+          <div class="helper-text">Tip: Sit ~1m from webcam · Bright, even light helps PoseNet.</div>
+        </div>
+      </div>
+
+      <div class="card log-card">
+        <div class="log-head">Latest Feedback</div>
+        <div id="logArea" class="log-area">Ready — press Start</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <small>Made with p5.js · ml5 PoseNet · © Smart Posture Trainer Pro+</small>
+  </footer>
+
+  <!-- script -->
+  <script src="sketch.js"></script>
+</body>
+
+</html>
